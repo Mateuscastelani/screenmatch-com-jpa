@@ -3,14 +3,11 @@ package br.com.alura.screenmatch.principal;
 import br.com.alura.screenmatch.model.DadosSerie;
 import br.com.alura.screenmatch.model.DadosTemporada;
 import br.com.alura.screenmatch.model.Episodio;
+import br.com.alura.screenmatch.model.Serie;
 import br.com.alura.screenmatch.service.ConsumoApi;
 import br.com.alura.screenmatch.service.ConverteDados;
 
-import java.util.ArrayList;
-import java.util.DoubleSummaryStatistics;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Principal {
@@ -29,9 +26,9 @@ public class Principal {
                     1 - Buscar Séries
                     2 - Buscar Episódios
                     3 - Listar Séries Buscadas
-                    
-                    0 - Sair                                 
-                    """;
+                   \s
+                    0 - Sair                                \s
+                   \s""";
 
             System.out.println(menu);
             opcao = leitura.nextInt();
@@ -56,15 +53,15 @@ public class Principal {
         }
     }
 
-    private void listarSeriesBuscadas() {
-        dadosSeries.forEach(System.out::println);
 
-    }
+
 
     private void buscarSerieWeb() {
         DadosSerie dados = getDadosSerie();
-        dadosSeries.add(dados);
-        System.out.println(dados);
+            dadosSeries.add(dados);
+            System.out.println(dados);
+
+
     }
 
     private DadosSerie getDadosSerie() {
@@ -85,5 +82,14 @@ public class Principal {
             temporadas.add(dadosTemporada);
         }
         temporadas.forEach(System.out::println);
+    }
+    private void listarSeriesBuscadas() {
+        List<Serie> series = new ArrayList<>();
+        series = dadosSeries.stream()
+                .map(Serie::new)
+                .toList();
+        series.stream()
+                .sorted(Comparator.comparing(Serie::getGenero))
+                .forEach(System.out::println);
     }
 }
