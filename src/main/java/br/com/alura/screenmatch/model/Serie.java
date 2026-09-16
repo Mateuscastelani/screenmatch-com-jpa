@@ -34,7 +34,7 @@ public class Serie {
 
     private String sinopse;
 
-    @OneToMany(mappedBy = "serie")
+    @OneToMany(mappedBy = "serie", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Episodio> episodios = new ArrayList<>();
 
     public Serie() {}
@@ -48,16 +48,6 @@ public class Serie {
         this.poster = dadosSerie.poster();
         this.sinopse = ConsultaMyMemory.obterTraducao(dadosSerie.sinopse().trim()) ;
 
-      /*  try {
-            // O sistema tenta traduzir a sinopse
-            this.sinopse = ConsultaChatGPT.obterTraducao(dadosSerie.sinopse()).trim();
-        } catch (Exception e) {
-            // Se a OpenAI der erro, o programa não quebra
-            System.out.println("⚠️ API do ChatGPT indisponível (Cota/Erro). Salvando a sinopse original em inglês.");
-
-            // usa a sinopse original do OMDB
-            this.sinopse = dadosSerie.sinopse();
-       }*/
     }
 
     public List<Episodio> getEpisodios() {
@@ -65,6 +55,7 @@ public class Serie {
     }
 
     public void setEpisodios(List<Episodio> episodios) {
+        episodios.forEach(e-> e.setSerie(this));
         this.episodios = episodios;
     }
 
@@ -137,6 +128,7 @@ public class Serie {
         return "Serie{" +
                 "titulo='" + titulo + '\'' +
                 ", totalTemporadas=" + totalTemporadas +
+                ", episodios=" + episodios +
                 ", avaliacao=" + avaliacao +
                 ", genero=" + genero +
                 ", atores='" + atores + '\'' +
