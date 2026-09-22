@@ -30,6 +30,9 @@ public class Principal {
         var opcao = -1;
         while(opcao != 0) {
             var menu = """
+                    \s
+                    \s
+                    \s
                     1 - Buscar Séries
                     2 - Buscar Episódios
                     3 - Listar Séries Buscadas
@@ -37,6 +40,8 @@ public class Principal {
                     5 - Buscar Série por ator
                     6 - Top 5 Séries
                     7 - Buscar Séries por categoria
+                    8 - Filtrar Séries
+    
                    \s
                     0 - Sair                                \s
                    \s""";
@@ -65,7 +70,11 @@ public class Principal {
                     buscarTop5Series();
                     break;
                 case 7:
-                    buscarSeriesPorCategoria();                    break;
+                    buscarSeriesPorCategoria();
+                    break;
+                case 8:
+                    filtrarSeriesPorTotalTemporadasEAvaliacao();
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
@@ -170,6 +179,18 @@ public class Principal {
         List<Serie> seriePorCategoria = repositorio.findByGenero(categoria);
         System.out.println("Series da categoria: " + nomeGenero);
         seriePorCategoria.forEach(System.out::println);
+
+    }
+
+    private void filtrarSeriesPorTotalTemporadasEAvaliacao() {
+        System.out.println("Filtrar séries até quantas temporadas? ");
+        var totalTemporadas = leitura.nextLine();
+        System.out.println("Com avaliação a partir de que valor? ");
+        var avaliacao = leitura.nextDouble();
+        leitura.nextLine();
+        List<Serie> filtroSeries = repositorio.findByTotalTemporadasLessThanEqualAndAvaliacaoGreaterThanEqual(Integer.parseInt(totalTemporadas), avaliacao);
+        System.out.println("*** Series filtradas ***");
+        filtroSeries.forEach(s -> System.out.println(s.getTitulo() + " avaliacao: " + s.getAvaliacao()));
 
     }
 
