@@ -23,4 +23,5 @@ public class SerieController {
                 .collect(Collectors.toList());
     }
 
+
 }
