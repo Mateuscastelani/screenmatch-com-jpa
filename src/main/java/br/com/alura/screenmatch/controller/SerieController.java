@@ -8,6 +8,7 @@ import br.com.alura.screenmatch.repository.SerieRepository;
 import br.com.alura.screenmatch.service.ConsumoApi;
 import br.com.alura.screenmatch.service.ConverteDados;
 import br.com.alura.screenmatch.service.SerieService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -96,5 +97,9 @@ public class SerieController {
         }
     }
 
+    @DeleteMapping("{id}")
+    public void deletarSerie(@PathVariable Long id){
+        repositorio.deleteById(id);
+    }
 
 }
