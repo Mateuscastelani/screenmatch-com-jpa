@@ -1,5 +1,6 @@
 package br.com.alura.screenmatch.controller;
 
+import br.com.alura.screenmatch.dto.EpisodioDTO;
 import br.com.alura.screenmatch.dto.SerieDTO;
 import br.com.alura.screenmatch.model.Categoria;
 import br.com.alura.screenmatch.model.DadosSerie;
@@ -55,6 +56,13 @@ public class SerieController {
         return servico.obterPorId(id);
     }
 
+    @GetMapping("/{id}/temporadas/todas")
+    public List<EpisodioDTO> obterTodasTemporadas(@PathVariable Long id){
+    return servico.obterTodasTemporadas(id);
+    }
+
+
+
     @PostMapping("/{nomeSerie}")
     public void inserirSerie(@PathVariable String nomeSerie){
         // 1. Monta a URL e busca no OMDb (substituindo espaços por + para a URL não quebrar)
@@ -101,5 +109,7 @@ public class SerieController {
     public void deletarSerie(@PathVariable Long id){
         repositorio.deleteById(id);
     }
+
+
 
 }
