@@ -66,6 +66,11 @@ public class SerieController {
         return servico.obterTemporadaPorNumero(id, numero);
     }
 
+    @GetMapping("/categoria/{nomeGenero}")
+    public List<SerieDTO> obterSeriesPorCategoria(@PathVariable String nomeGenero){
+        return servico.obterSeriesPorCategoria(nomeGenero);
+    }
+
 
     @PostMapping("/{nomeSerie}")
     public void inserirSerie(@PathVariable String nomeSerie){
